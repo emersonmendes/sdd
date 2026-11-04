@@ -114,6 +114,8 @@ Personalize as skills dentro dos blocos `<!-- sdd:project -->`; melhorias genér
 
 ```
 bin/sdd                      # init | update | status | diff (bash + git, sem dependências)
+scripts/smoke-test.sh        # teste de ponta a ponta do template e do script
+CLAUDE.md, .claude/skills/   # regras e a skill de release para trabalhar neste repo com Claude Code
 setup/SETUP.md               # protocolo que o assistente segue no setup
 setup/REVERSE-ENGINEERING.md # como projetos existentes são mapeados antes da renderização
 template/manifest            # skills e seus padrões
@@ -125,6 +127,16 @@ template/project/            # scaffold: CLAUDE.md, ai/, specs/_template/, docs/
 Placeholders renderizados pelo script: `{{PREFIX}}`, `{{PROJECT_NAME}}`, `{{LANGUAGE}}`,
 `{{MODEL_IMPLEMENT}}`, `{{MODEL_LEAD}}`. Conteúdo específico do projeto fica nos blocos
 `<!-- sdd:project -->` e nos arquivos de scaffold.
+
+## Desenvolvendo o template
+
+Abra o Claude Code neste repositório: o `CLAUDE.md` traz as regras de edição (skills genéricas,
+placeholders permitidos, gates que nunca podem ser enfraquecidos, convenção de links) e o
+`/sdd.release` corta uma release. Antes de commitar uma mudança:
+
+```
+bash scripts/smoke-test.sh   # renderiza um projeto demo, personaliza, atualiza para uma v2, checa merge/conflito/links
+```
 
 ## Versionamento
 

@@ -108,6 +108,8 @@ Customize skills inside their `<!-- sdd:project -->` blocks; generic improvement
 
 ```
 bin/sdd                      # init | update | status | diff (bash + git, no dependencies)
+scripts/smoke-test.sh        # end-to-end test of the template and the script
+CLAUDE.md, .claude/skills/   # rules and the release skill for working on this repo with Claude Code
 setup/SETUP.md               # the protocol the assistant follows at setup
 setup/REVERSE-ENGINEERING.md # how existing projects are mapped before rendering
 template/manifest            # skills and their defaults
@@ -119,6 +121,16 @@ template/project/            # scaffold: CLAUDE.md, ai/, specs/_template/, docs/
 Placeholders rendered by the script: `{{PREFIX}}`, `{{PROJECT_NAME}}`, `{{LANGUAGE}}`,
 `{{MODEL_IMPLEMENT}}`, `{{MODEL_LEAD}}`. Project-specific content lives in `<!-- sdd:project -->`
 blocks and in the scaffold files.
+
+## Developing the template
+
+Open Claude Code in this repository: its `CLAUDE.md` holds the editing rules (generic skills,
+allowed placeholders, gates that must never be weakened, link conventions) and `/sdd.release`
+cuts a release. Before committing a change:
+
+```
+bash scripts/smoke-test.sh   # renders a demo project, customizes, updates to a v2, checks merge/conflict/links
+```
 
 ## Versioning
 
