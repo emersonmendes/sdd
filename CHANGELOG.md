@@ -5,13 +5,17 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+- Public-repo hygiene: no references to the originating project; MIT license of the vendored
+  `security-audit` skill shipped alongside it (`LICENSE` in its folder, copied into projects);
+  README section on what SDD is and why it pays off; security note on `sdd update` replacing
+  `.sdd/sdd`.
 - Repo tooling: `CLAUDE.md` with the template editing rules, `scripts/smoke-test.sh`
   (end-to-end render/customize/update/conflict/link checks) and the `/sdd.release` skill.
   Nothing under `template/` or `bin/` changed.
 
 ## v0.1.0 — 2026-11-04
 
-First release, extracted from the `aqconecta` project skills.
+First release.
 
 - Skills: `start`, `tasks`, `code`, `review`, `security`, `go`, `express`, `fix`, `ask`,
   `reverse`, `commit`, `update`; optional `screen` and vendored `security-audit` (Cloudflare).

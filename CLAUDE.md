@@ -8,7 +8,7 @@ repository is a **template, not a product**: it has no `/specs`, no application 
 skills do not run here. Everything under `template/` ends up inside other projects; everything
 else is tooling and documentation for this repository.
 
-Consumers: projects rendered from this template through the README prompt, e.g. `aqconecta`.
+Consumers: projects rendered from this template through the README prompt.
 They record the commit they rendered in `.sdd/config` and run `bash .sdd/sdd update` to pull
 changes. **Assume every edit under `template/` and `bin/` reaches every consumer on their next
 update.**

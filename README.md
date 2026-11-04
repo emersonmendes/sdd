@@ -10,6 +10,33 @@ The template is **rendered into each project** (skill names get the project's pr
 project's facts) and can later be **updated from this repository** with a 3-way merge that keeps
 the project's customizations.
 
+## What is SDD, and why use it
+
+**Spec-Driven Development** means every behavior is written down before it is built: a short spec
+with the objective, numbered business rules, end-to-end flows and verifiable acceptance criteria.
+That spec is the single source of truth. Code is derived from it through an explicit chain
+(spec → tasks → code → review → security), tests cite the rules they cover, and when reality
+changes, the spec changes first.
+
+With an AI coding assistant this discipline pays off quickly:
+
+- **Fewer wrong features.** The assistant is not allowed to infer requirements. Ambiguity is
+  resolved in a two-page spec before any code exists, not discovered in a forty-file diff.
+- **Reviews you can actually do.** You approve the spec, then the task list, then the code — one
+  check-point per step instead of one big "looks fine".
+- **Tests that mean something.** Numbered rules and acceptance criteria map one-to-one to tests;
+  the review step checks that every rule has one.
+- **Context that survives the session.** Specs, the module map and the conventions live in files,
+  so a new session, a teammate or a different model gets the same instructions. Nothing important
+  lives only in chat history.
+- **Lower token cost.** Lean always-loaded files, detail on demand, a cheaper model for
+  implementation and an express lane for simple features.
+- **Security as a gate, not an afterthought.** Nothing is done with a Critical or High finding open.
+- **Legacy code included.** `reverse` writes the spec of what existing code does today, so old
+  features get the same treatment as new ones.
+
+Skip it for throwaway prototypes and one-off scripts. Use it for anything you will maintain.
+
 ## What you get
 
 | Skill | Purpose |
@@ -104,6 +131,10 @@ overwrites them.
 Customize skills inside their `<!-- sdd:project -->` blocks; generic improvements belong here —
 `bash .sdd/sdd diff <file>` gives you the patch to contribute.
 
+Security note: `sdd update` replaces `.sdd/sdd` with the template's script and rewrites the
+managed skills, so point `SDD_TEMPLATE_REPO` only at a repository you trust (your own fork is a
+good default) and review the diff before committing an update.
+
 ## Repository layout
 
 ```
@@ -139,6 +170,7 @@ rendered; `sdd update --ref <tag>` pins a release.
 
 ## Credits and license
 
-Extracted from the `aqconecta` project's skills. The optional `security-audit` skill is
-Cloudflare's, vendored unchanged except for its name (see
-`template/skills/security-audit/UPSTREAM.md`). MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE). The optional `security-audit` skill is Cloudflare's
+([cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill), MIT),
+vendored unchanged except for its name; its license ships inside its folder
+(`template/skills/security-audit/LICENSE`, see `UPSTREAM.md` there).
