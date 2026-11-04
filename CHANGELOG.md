@@ -5,6 +5,8 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+## v0.2.1 — 2026-11-04
+
 - `bin/sdd`: `update`, `status` and `diff` without `--template` died with "update needs a git
   checkout of the template: cloning …" — the "cloning" notice went to stdout and was captured as
   the clone path. It now goes to stderr. The smoke test covers the clone path (local
