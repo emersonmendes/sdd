@@ -112,7 +112,15 @@ Act as a **Software Engineer**.
 - Webhooks/integrations are **idempotent** when the spec requires it.
 - Never hand-edit generated code. Schema changes go through the project's migration tool.
 - Never hardcode user-facing strings when the project has an i18n rule (`CLAUDE.md`).
-- Never put secrets, credentials or real personal data in code, tests or fixtures.
+- Never put secrets, credentials or real personal data in code, tests, fixtures, seeds, snapshots
+  or docs: configuration comes from the environment
+  ([`/ai/conventions.md#configuration-and-environment-variables`](../../../ai/conventions.md#configuration-and-environment-variables)),
+  test data is synthetic.
+- Never weaken a security control to make something work: no disabled TLS verification, no
+  auth/CSRF/CORS guard commented out or short-circuited, no debug mode, test account or bypass
+  flag left in. If a task seems to need it, the spec is wrong — ask.
+- Add a dependency only when a task needs it: official registry, exact intended name, pinned by
+  the lockfile, no install hooks. Never from a git URL or tarball.
 
 <!-- sdd:project -->
 (setup: add stack-specific implementation notes here — how dependencies are wired, which layers
@@ -126,7 +134,8 @@ sections instead of repeating them. Delete this paragraph.)
 - Tests green and lint clean in every touched app, using the commands in
   [`/ai/conventions.md#commands`](../../../ai/conventions.md#commands). A change that fails lint or
   tests is not done.
-- No leftover placeholders, debug output, or unrelated changes in the diff.
+- No leftover placeholders, debug output, or unrelated changes in the diff — and nothing the
+  `/{{PREFIX}}.commit` leak scan would reject (secrets, real data, weakened controls).
 
 ## Expected output
 

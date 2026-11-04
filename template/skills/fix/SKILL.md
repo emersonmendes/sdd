@@ -55,7 +55,8 @@ Act as a **Software Engineer** doing a focused change.
    [clean code baseline](../{{PREFIX}}.code/SKILL.md#clean-code-baseline-every-line-you-write) of
    `{{PREFIX}}.code` — in short: no behavior outside the spec, thin entry points, business code
    framework-free where required, ports+adapters for integrations, atomic all-or-nothing writes,
-   no hand-edited generated code, no hardcoded user-facing strings.
+   no hand-edited generated code, no hardcoded user-facing strings, no secrets or real data, no
+   weakened security control.
 5. **Add/adjust tests** in the owning module for the changed behavior. A fix without a covering
    test is incomplete unless the surface genuinely has no runtime behavior (pure docs/comments).
 6. **Sync the spec only if code now diverges from it** (see next section).

@@ -54,6 +54,9 @@ Act as a **Spec Archaeologist**: describe observed behavior, never invent intent
 - **Do NOT** generate `tasks.md` — nothing is to be built.
 - **Do NOT** describe desired behavior; describe current behavior. Desired changes are a new
   feature (`/{{PREFIX}}.start`) or a fix (`/{{PREFIX}}.fix`).
+- **Do NOT** copy real data, credentials or internal hostnames from code, fixtures or history into
+  the spec — replace examples with synthetic values. A secret found in the code or its history is
+  compromised: report it at once under "Observed defects" and recommend rotating it.
 - Token hygiene: no whole-directory dumps; summarize files instead of quoting them; stop when the
   behavior is covered.
 

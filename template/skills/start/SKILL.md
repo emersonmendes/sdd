@@ -56,6 +56,8 @@ Act as a **Spec Architect**.
 - For flows that write several related records (and any money flow), state the
   atomicity/consistency expectation.
 - Classify every new personal-data field when `CLAUDE.md` defines a data-protection rule.
+- Examples use synthetic data only (`example.com`, fictitious names) — never real customers,
+  credentials or internal hostnames; the spec is committed too.
 - Ask when a requirement is ambiguous — never invent a business rule to fill a gap.
 - **Do not inspect unrelated specs or source code unless the user explicitly asks to extend an
   existing feature.** Then read only that feature's spec.

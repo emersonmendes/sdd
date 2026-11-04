@@ -77,7 +77,8 @@ Run these four in sequence, without stopping between them:
 - Respect every **non-negotiable rule** of each underlying skill (they are not waived): code lands
   in the correct app/module/layer, business code stays framework-free where required, thin entry
   points, no hardcoded user-facing strings, no hand-edited generated code, tests in the owning
-  module. See [`{{PREFIX}}.code` non-negotiable rules](../{{PREFIX}}.code/SKILL.md#non-negotiable-rules).
+  module, no secrets or real data in the diff, no weakened security control. See
+  [`{{PREFIX}}.code` non-negotiable rules](../{{PREFIX}}.code/SKILL.md#non-negotiable-rules).
 - Keep the same feature/folder across all four steps.
 - If, mid-run, the work reveals hidden complexity (a critical rule, an integration, real
   ambiguity), **STOP** and recommend `/{{PREFIX}}.go` rather than guessing — the gate can fail

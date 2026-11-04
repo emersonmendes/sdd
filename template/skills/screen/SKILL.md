@@ -45,7 +45,8 @@ implementation (consumption rules: `docs/Screens/README.md`).
 2. **Pick the filename**: `docs/Screens/<actor>-<screen>.html`, English kebab-case
    (`client-home`, `admin-users`). Variations get a suffix (`-empty`, `-v2`).
 3. **Write the prompt** in {{LANGUAGE}} using the template below — concrete, ordered top-to-bottom,
-   with realistic sample data for the product's locale and final UI copy.
+   with realistic **synthetic** sample data for the product's locale (never real customer data —
+   the prompt leaves the project) and final UI copy.
 4. **Report** in chat: the prompt in one fenced block, the target filename, the assumptions made,
    and — if no spec covers the screen — the note that `/{{PREFIX}}.start` is needed before
    `/{{PREFIX}}.code`.

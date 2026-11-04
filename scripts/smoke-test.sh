@@ -38,6 +38,20 @@ for s in $ALL_SKILLS; do
   [ -f "$P/.claude/skills/demo.$s/SKILL.md" ] || bad "missing rendered skill $s"
   grep -q "^name: demo.$s\$" "$P/.claude/skills/demo.$s/SKILL.md" || bad "frontmatter name of $s"
 done; ok "all manifest skills rendered with prefix"
+gate() { grep -q "$2" "$P/.claude/skills/demo.$1/SKILL.md" || bad "gate missing in $1: $2"; }
+gate commit   '^## Gate'
+gate commit   '^## Leak scan (mandatory before every commit)'
+gate review   '^## Mandatory checklist'
+gate security '^## Mandatory checklist'
+gate security '^\*\*Repository hygiene'
+gate security '^## Severity scale'
+gate code     '^## Non-negotiable rules'
+gate code     '^## Clean code baseline'
+gate go       '^## Check-point protocol'
+gate express  '^## Complexity gate'
+gate fix      '^## Scope gate'
+gate fix      '^## Security analysis before finishing'
+ok "quality-gate headings present in rendered skills"
 check "techlead agent rendered" "grep -q 'Demo App & Co' '$P/.claude/agents/techlead.md'"
 check "scaffold copied" "[ -f '$P/CLAUDE.md' ] && [ -f '$P/ai/module_map.md' ] && [ -f '$P/specs/_template/spec.md' ] && [ -f '$P/docs/Product.md' ]"
 check "script installed and executable" "[ -x '$P/.sdd/sdd' ]"

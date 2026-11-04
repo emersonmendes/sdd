@@ -68,7 +68,9 @@ execution-safety rules; it writes no source files. Then merge its results into t
    business-logic findings.
 2. Collect the **changed code** in every touched app/repo: uncommitted changes plus the commits of
    this feature (`git diff`, `git diff <base>...HEAD`, or the files listed in `tasks.md`). Include
-   the tests — they reveal which abuse cases are (not) covered.
+   the tests — they reveal which abuse cases are (not) covered — and every non-code file in the
+   diff (configuration, CI, Dockerfiles, fixtures, seeds, docs): the repository-hygiene items apply
+   to them.
 3. Read **the surrounding code each change depends on** (guards, validators, persistence adapters,
    session helpers) — a vulnerability often sits at the seam, not in the diff line itself.
 4. Do not audit unrelated code. If you spot a serious pre-existing issue outside scope, list it
@@ -110,7 +112,9 @@ Analyze each item against the changed code; mark it ✅ (ok), ❌ (finding), or 
       an account exists; login/reset/verification endpoints are rate-limited or otherwise
       brute-force resistant.
 - [ ] No secrets, keys, or credentials in code, tests, fixtures, logs, or `*.example` templates;
-      server-only config never exposed to clients.
+      server-only config never exposed to clients. A secret that reached any commit — pushed or
+      not — is **compromised**: Critical, and rotating it is part of the remediation (removing it
+      later is not enough).
 
 **Sensitive data & privacy** (LGPD/GDPR or the project's data-protection rule)
 - [ ] Responses expose only the fields the consumer needs — no password hashes, tokens, internal
@@ -125,9 +129,27 @@ Analyze each item against the changed code; mark it ✅ (ok), ❌ (finding), or 
 - [ ] Debug/introspection surfaces (API docs UI, metrics, admin tools) not exposed in production;
       CORS (if added) is an explicit allow-list; security headers not weakened.
 - [ ] Webhooks/callbacks (if any) verify signature/shared secret and are idempotent.
-- [ ] New dependencies are justified and pinned via the lockfile; run the project's audit
-      command ([`/ai/conventions.md#commands`](../../../ai/conventions.md#commands)) and report
+- [ ] New dependencies are justified, come from the official registry under the exact intended
+      name (no typosquat; no `git+`, tarball URL or unknown registry in the lockfile; no new
+      install hook) and are pinned via the lockfile; run the project's audit command
+      ([`/ai/conventions.md#commands`](../../../ai/conventions.md#commands)) and report
       High/Critical advisories that affect the change.
+
+**Repository hygiene & data exfiltration** (what must never reach the repository or leave the
+system)
+- [ ] No forbidden file in the diff — `.env*` (except documented `*.example` templates), private
+      keys and other key material, credential stores, cloud/service-account files, infrastructure
+      state (`*.tfstate`), database dumps, exports, HAR or log files.
+- [ ] Fixtures, seeds, snapshots, test data and spec/doc examples hold synthetic data only — no
+      real people, production identifiers or exported records.
+- [ ] No weakened control: TLS verification on; no guard commented out or short-circuited; no
+      hardcoded test account, bypass header/parameter or backdoor; no debug/dev mode or
+      permissive setting (`CORS *`, schema auto-sync) defaulting on in production configuration.
+- [ ] No data leaves the system outside the spec: no new outbound call, telemetry, analytics or
+      error reporter sending user or business data to a destination the spec does not name.
+- [ ] CI workflows, Dockerfiles, compose files and deployment manifests carry no inline secret,
+      never copy `.env*` into an image, and pin third-party actions and base images to a version
+      or digest; no `curl … | sh` in scripts or build steps.
 
 <!-- sdd:project -->
 (setup: add stack-specific checks here — ORM raw-query APIs to forbid, client-exposed env
@@ -143,6 +165,9 @@ each. Delete this paragraph.)
 | **High** | Exploitable with low effort; another user's data/actions, privilege escalation, stored XSS | Yes |
 | **Medium** | Needs specific conditions or limited impact; missing rate limit, verbose errors, weak validation | No — fix or record a tracked follow-up |
 | **Low** | Defense-in-depth / hardening | No |
+
+A secret or credential file in any commit is always **Critical**; real personal data, a weakened
+control or an untrusted dependency in the diff is at least **High**.
 
 ## Expected output
 
