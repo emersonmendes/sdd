@@ -31,7 +31,9 @@ With an AI coding assistant this discipline pays off quickly:
   lives only in chat history.
 - **Lower token cost.** Lean always-loaded files, detail on demand, a cheaper model for
   implementation and an express lane for simple features.
-- **Security as a gate, not an afterthought.** Nothing is done with a Critical or High finding open.
+- **Security as a gate, not an afterthought.** Nothing is done with a Critical or High finding
+  open, and nothing is committed with a secret, a credential file, real personal data or a
+  disabled security control in the diff.
 - **Legacy code included.** `reverse` writes the spec of what existing code does today, so old
   features get the same treatment as new ones.
 
@@ -45,13 +47,13 @@ Skip it for throwaway prototypes and one-off scripts. Use it for anything you wi
 | `/<prefix>.tasks` | Step 2 — `tasks.md` mapped to app/module/layer, with a contract between apps |
 | `/<prefix>.code` | Step 3 — implement from `tasks.md`, with tests, clean-code baseline, green lint; delegates multi-app work to specialist agents |
 | `/<prefix>.review` | Step 4 — spec compliance, architecture, clean code and test-quality report |
-| `/<prefix>.security` | Step 5 — AppSec checklist, OWASP-mapped findings, severity gate (no Critical/High open) |
+| `/<prefix>.security` | Step 5 — AppSec checklist (access control, injection, secrets, data exposure, repository hygiene, supply chain), OWASP-mapped findings, severity gate (no Critical/High open) |
 | `/<prefix>.go` | The five steps with an approval check-point after each |
 | `/<prefix>.express` | Token-lean lane for simple features: no questions, no check-points, skips review, never skips security |
 | `/<prefix>.fix` | Small change to an already-specified feature, with inline self-review and security pass |
 | `/<prefix>.reverse` | Spec from existing code — brings legacy features under SDD |
 | `/<prefix>.ask` | Architecture/technical advisor; writes no code |
-| `/<prefix>.commit` | One clean commit per touched repository; never pushes |
+| `/<prefix>.commit` | Leak scan on the staged changes (secrets, forbidden files, real data, weakened controls, untrusted dependencies), then one clean commit per touched repository; never pushes |
 | `/<prefix>.update` | Sync the project with this template |
 | `/<prefix>.screen` (optional) | Prompt generator for Claude Design screens |
 | `/<prefix>.security-audit` (optional) | Vendored [Cloudflare security-audit](https://github.com/cloudflare/security-audit-skill) for periodic deep audits |
@@ -65,7 +67,7 @@ leakage check), `ai/conventions.md` (commands, testing, naming, i18n, DB, env, c
 
 Principles baked into the skills: specs as the single source of truth, clean code, tests for every
 business rule, token economy (lean always-loaded files, on-demand detail, a cheaper model for
-implementation, an express lane), mandatory review and security gates.
+implementation, an express lane), mandatory review, security and leak-scan gates.
 
 ## Quick start
 

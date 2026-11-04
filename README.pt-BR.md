@@ -32,7 +32,9 @@ Com um assistente de código por IA essa disciplina se paga rápido:
   no histórico do chat.
 - **Menor custo em tokens.** Arquivos sempre carregados enxutos, detalhe sob demanda, modelo mais
   barato na implementação e uma via express para features simples.
-- **Segurança como gate, não como lembrança.** Nada está pronto com um achado Crítico ou Alto aberto.
+- **Segurança como gate, não como lembrança.** Nada está pronto com um achado Crítico ou Alto
+  aberto, e nada é commitado com um segredo, um arquivo de credencial, dado pessoal real ou um
+  controle de segurança desativado no diff.
 - **Código legado incluído.** A `reverse` escreve a spec do que o código existente faz hoje, e
   features antigas passam a ter o mesmo tratamento das novas.
 
@@ -46,13 +48,13 @@ Pule em protótipos descartáveis e scripts de uma vez só. Use em qualquer cois
 | `/<prefixo>.tasks` | Passo 2 — `tasks.md` mapeado para app/módulo/camada, com contrato entre apps |
 | `/<prefixo>.code` | Passo 3 — implementa a partir do `tasks.md`, com testes, base de clean code e lint limpo; delega trabalho multi-app aos agentes especialistas |
 | `/<prefixo>.review` | Passo 4 — relatório de conformidade com a spec, arquitetura, clean code e qualidade dos testes |
-| `/<prefixo>.security` | Passo 5 — checklist AppSec, achados mapeados em OWASP, gate de severidade (nenhum Crítico/Alto aberto) |
+| `/<prefixo>.security` | Passo 5 — checklist AppSec (controle de acesso, injeção, segredos, exposição de dados, higiene do repositório, supply chain), achados mapeados em OWASP, gate de severidade (nenhum Crítico/Alto aberto) |
 | `/<prefixo>.go` | Os cinco passos com check-point de aprovação após cada um |
 | `/<prefixo>.express` | Via econômica em tokens para features simples: sem perguntas, sem check-points, pula a review, nunca pula a segurança |
 | `/<prefixo>.fix` | Mudança pequena em feature já especificada, com auto-revisão inline e passagem de segurança |
 | `/<prefixo>.reverse` | Spec a partir de código existente — traz features legadas para o SDD |
 | `/<prefixo>.ask` | Consultor técnico/arquitetura; não escreve código |
-| `/<prefixo>.commit` | Um commit limpo por repositório tocado; nunca faz push |
+| `/<prefixo>.commit` | Varredura de vazamento no diff staged (segredos, arquivos proibidos, dados reais, controles enfraquecidos, dependências não confiáveis), depois um commit limpo por repositório tocado; nunca faz push |
 | `/<prefixo>.update` | Sincroniza o projeto com este template |
 | `/<prefixo>.screen` (opcional) | Gerador de prompt para telas no Claude Design |
 | `/<prefixo>.security-audit` (opcional) | [Cloudflare security-audit](https://github.com/cloudflare/security-audit-skill) vendorizada para auditorias profundas periódicas |
@@ -67,7 +69,8 @@ banco, env, commits), `ai/docs-authoring-rules.md` (higiene de tokens), `specs/_
 
 Princípios embutidos nas skills: specs como única fonte de verdade, clean code, teste para cada
 regra de negócio, economia de tokens (arquivos sempre carregados enxutos, detalhe sob demanda,
-modelo mais barato na implementação, via express), gates obrigatórios de review e segurança.
+modelo mais barato na implementação, via express), gates obrigatórios de review, segurança e
+varredura de vazamento.
 
 ## Início rápido
 

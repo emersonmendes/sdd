@@ -40,7 +40,8 @@ update.**
   uses extra `{{APP*}}`/`{{TEST_CMD}}`/`{{LINT_CMD}}` tokens that the setup fills by hand.
 - Never weaken a quality gate: prerequisite STOPs, the `review` and `security` checklists, the
   severity gate, the `go` check-point protocol, the `express` and `fix` gates, the `code`
-  non-negotiable rules and clean-code baseline. Reword, reorder, extend — never drop.
+  non-negotiable rules and clean-code baseline, the `commit` gate and leak scan. Reword, reorder,
+  extend — never drop. The smoke test checks that the gate headings are still there.
 - Token hygiene rules in
   [`template/project/ai/docs-authoring-rules.md`](template/project/ai/docs-authoring-rules.md)
   apply to the skills themselves: one fact one home, lean `description`, no "When to use" or

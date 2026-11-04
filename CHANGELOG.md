@@ -5,6 +5,28 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+- Leak prevention. `commit` gains a mandatory **leak scan** on the staged changes of every
+  repository — forbidden files (`.env*`, key material, credential stores, infrastructure state,
+  dumps, exports, HAR/log files), secret literals (provider keys, private keys, JWTs,
+  `user:password@` URLs, suspicious assignments), real personal data, weakened security controls
+  and bypasses, supply-chain and infrastructure red flags — with STOP semantics (unstage and
+  report; a secret that reached any commit is compromised and must be rotated), a ban on
+  `--no-verify`, and a `<!-- sdd:project -->` block for project patterns. `security` checklist
+  gains a "Repository hygiene & data exfiltration" group, the compromised-secret rule (Critical,
+  rotate) and registry/typosquat/install-hook checks on new dependencies; its scope now includes
+  the non-code files of the diff. `code` non-negotiable rules cover synthetic test data, never
+  weakening a security control and dependency provenance. `express`/`fix` summaries updated;
+  `start`, `reverse` and `screen` use synthetic examples only, and `reverse` reports secrets found
+  in code or history.
+- Scaffold and setup (apply by hand in projects — `.sdd/last-scaffold.diff`): `CLAUDE.md` gains
+  two non-negotiable rules (never commit secrets or real data — commit through `/<prefix>.commit`;
+  never weaken a security control) and a commit step in the mandatory workflow;
+  `ai/conventions.md` gains "Secrets and sensitive files" (secret store, `.gitignore` baseline,
+  synthetic data, rotation); `ai/docs-authoring-rules.md` lists the `commit` gate among the gates
+  that must never be weakened; `setup/SETUP.md` asks where secrets live, fills the `commit`
+  project block, checks `.gitignore` and already-tracked forbidden files; reverse engineering
+  flags committed secrets as risks.
+- Smoke test checks that every quality-gate heading is present in the rendered skills.
 - `security` skill no longer links to the optional `security-audit` skill (dead link when it is
   not installed); the smoke test now also renders the default skill set and checks its links.
 - Skills: `<!-- sdd:project -->` blocks added to `express` and `fix` (the project's critical
