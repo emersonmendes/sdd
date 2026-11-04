@@ -44,8 +44,9 @@ only to confirm the findings)
 2. Architecture style: pragmatic hexagonal (ports & adapters where it hurts) (Recommended) /
    clean architecture / layered MVC / feature folders / other. And the dependency direction.
 3. Data and integrations: database + ORM/migration tool; message broker; external providers
-   (payment, email, storage, auth); how apps communicate and any hard boundary ("UI never calls
-   the API directly").
+   (payment, email, storage, auth); where secrets live (environment files, platform secret
+   manager, vault); how apps communicate and any hard boundary ("UI never calls the API
+   directly").
 4. Commands per app: install, test, lint, format, dependency audit, run — plus runtime versions
    and package manager.
 
@@ -106,23 +107,32 @@ Work through every file that contains `(setup:` and every `<!-- sdd:project -->`
 2. **`ai/module_map.md`** — apps table, architecture style and rigor levels, module layout,
    dependency direction and wiring, "where each thing belongs", project-specific leakage checks.
    For existing projects, use the reverse-engineering draft.
-3. **`ai/conventions.md`** — commands table (exact), testing, naming, errors, config, and only
-   the optional sections that apply (API docs, database, i18n, data protection, UI references),
-   plus the commit convention. Delete sections that do not apply.
+3. **`ai/conventions.md`** — commands table (exact), testing, naming, errors, config, secrets and
+   sensitive files (secret store, synthetic-data helpers, rotation contact), and only the optional
+   sections that apply (API docs, database, i18n, data protection, UI references), plus the
+   commit convention. Delete sections that do not apply.
 4. **`docs/Product.md`** — from the interview and the README, in the project language.
 5. **Skills' project blocks** — `code` (implementation notes), `review` (project checklist
-   lines), `security` (stack-specific checks), `tasks` (task conventions), `express` and `fix`
-   (the project's critical areas), `ask` (extra reference docs), `screen` (shared UI patterns, if
-   enabled). Replace the guidance with project facts or leave the block empty; keep the markers.
+   lines), `security` (stack-specific checks), `commit` (project-specific leak patterns and
+   allowed exceptions), `tasks` (task conventions), `express` and `fix` (the project's critical
+   areas), `ask` (extra reference docs), `screen` (shared UI patterns, if enabled). Replace the
+   guidance with project facts or leave the block empty; keep the markers.
 6. **Specialist agents** (if chosen) — for each app, copy
    `<template clone>/template/agents/_dev.template.md` to `.claude/agents/<app>-dev.md` and fill
    `{{APP}}`, `{{APP_ROLE}}`, `{{APP_PATH}}`, `{{APP_STACK}}`, `{{TEST_CMD}}`, `{{LINT_CMD}}`,
    `{{PREFIX}}`, `{{MODEL_IMPLEMENT}}`, the convention sections, and the provider/consumer
    contract paragraph. Give each a distinct `color`.
-7. **Language** — if the chosen language is not English, translate the scaffold files that humans
+7. **`.gitignore` and tracked files** — make sure the baseline patterns from
+   `ai/conventions.md` ("Secrets and sensitive files") are present in every repository's
+   `.gitignore`; append the missing ones. Then check what is already tracked: match `git ls-files`
+   against the forbidden-file list of the `commit` skill's leak scan (`.env*` except examples,
+   key material, credential stores, `*.tfstate`, dumps, HAR/log files) and grep the tree for
+   obvious secret literals. Report every hit to the user as a finding — do not delete files or
+   rewrite history; a tracked secret is compromised and must be rotated by the team.
+8. **Language** — if the chosen language is not English, translate the scaffold files that humans
    read: `specs/_template/*.md` and `docs/Product.md`. Keep `CLAUDE.md`, `ai/*.md` and `.claude/**`
    in English.
-8. Delete every `(setup: …)` paragraph. Do not change template-owned text outside the project
+9. Delete every `(setup: …)` paragraph. Do not change template-owned text outside the project
    blocks — improvements belong in the template repository.
 
 ## Phase 5 — Verify and hand over
@@ -133,6 +143,8 @@ Work through every file that contains `(setup:` and every `<!-- sdd:project -->`
 3. `bash .sdd/sdd status` shows the template version and no leftovers.
 4. For an existing project: `specs/_inventory.md` lists the features found, none marked as
    specified yet.
-5. Report in the project language: files created, decisions recorded, and the next steps —
+5. `.gitignore` carries the baseline patterns, and the tracked-files check of Phase 4 either came
+   back clean or its findings are in the report.
+6. Report in the project language: files created, decisions recorded, and the next steps —
    new project: `/<prefix>.go <first feature>`; existing project: `/<prefix>.reverse <feature>`
    before any `/<prefix>.fix` on it; commit with `/<prefix>.commit` when ready. Do not commit.

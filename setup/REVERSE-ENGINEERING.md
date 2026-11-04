@@ -32,7 +32,9 @@ inventory.
 5. **Auth and session** — mechanism (cookies, JWT, OAuth), where authorization is enforced,
    roles/ownership model.
 6. **Cross-cutting conventions** — naming/casing, error shape, validation, config/env loading,
-   logging, i18n, API docs, feature flags.
+   logging, i18n, API docs, feature flags. Where secrets live, and whether any secret, `.env`
+   file, key or dump is already tracked by git — list each one under "Open points" as a risk
+   (compromised until rotated); never delete or rewrite anything.
 7. **Quality tooling** — test frameworks, test locations, coverage of business rules, lint,
    formatter, type checking, CI pipeline, exact commands (from manifests/CI, not guessed).
 8. **Features** — the capabilities the system exposes, from routes, screens, commands, jobs and
