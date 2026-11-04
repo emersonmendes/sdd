@@ -71,6 +71,32 @@ else
   echo "  skip link check (python3 not found)"
 fi
 
+echo "== default skill set (no optional skills): render + links"
+D="$WORK/proj-default"; mkdir -p "$D/.sdd"; gitc -C "$D" init -q -b main
+DEFAULT_SKILLS="$(awk '!/^#/ && $2 == "on" {print $1}' "$ROOT/template/manifest" | tr '\n' ' ')"
+printf 'SDD_PREFIX=base\nSDD_SKILLS="%s"\n' "$DEFAULT_SKILLS" > "$D/.sdd/config"
+( cd "$D" && bash "$WORK/tpl/bin/sdd" init --template "$WORK/tpl" >/dev/null ); ok "default set rendered"
+if command -v python3 >/dev/null; then
+  python3 -I - "$D" <<'PY' || bad "link check (default set)"
+import re, sys, pathlib
+root = pathlib.Path(sys.argv[1]); bad = 0
+files = [p for p in list(root.glob('.claude/**/*.md')) + [root/'CLAUDE.md'] + list(root.glob('ai/*.md')) if p.is_file()]
+def slug(h): return re.sub(r'[^\w\- ]', '', h.strip().lower()).replace(' ', '-')
+for f in files:
+    for m in re.finditer(r'\]\(([^)\s]+)\)', f.read_text()):
+        link = m.group(1)
+        if link.startswith(('http', 'mailto')): continue
+        path, _, anchor = link.partition('#')
+        t = (f.parent / path).resolve() if path else f.resolve()
+        if not t.exists(): print(f'  missing file   {f.relative_to(root)}: {link}'); bad += 1; continue
+        if anchor and t.suffix == '.md':
+            heads = [slug(re.sub(r'^#+\s*', '', l)) for l in t.read_text().splitlines() if l.startswith('#')]
+            if anchor not in heads: print(f'  missing anchor {f.relative_to(root)}: {link}'); bad += 1
+print(f'  ok   links checked in {len(files)} files (default set)' if not bad else f'  FAIL {bad} broken link(s) in default set')
+sys.exit(1 if bad else 0)
+PY
+fi
+
 echo "== customize project, create template v2"
 gitc -C "$P" add -A; gitc -C "$P" commit -qm init
 sed -i 's#^(setup: add stack-specific implementation notes here.*#- Project note kept by the merge.#' "$P/.claude/skills/demo.code/SKILL.md"

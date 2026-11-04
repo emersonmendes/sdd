@@ -5,6 +5,8 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+- `security` skill no longer links to the optional `security-audit` skill (dead link when it is
+  not installed); the smoke test now also renders the default skill set and checks its links.
 - Skills: `<!-- sdd:project -->` blocks added to `express` and `fix` (the project's critical
   areas, never handled in the fast lanes), `ask` (extra reference docs) and `tasks` (task
   conventions). `fix` gate now states that changing a critical rule is out of its scope.

@@ -29,9 +29,9 @@ is nothing to analyze.
 
 ## Optional deep audit (`{{PREFIX}}.security-audit`)
 
-Applies only when the project ships the vendored
-[`{{PREFIX}}.security-audit`](../{{PREFIX}}.security-audit/SKILL.md) skill (Cloudflare's
-security-audit) — check that `.claude/skills/{{PREFIX}}.security-audit/` exists. It is **opt-in and
+Applies only when the project ships the vendored `{{PREFIX}}.security-audit` skill (Cloudflare's
+security-audit) — check that `.claude/skills/{{PREFIX}}.security-audit/SKILL.md` exists; it is not
+linked here because the skill is optional. It is **opt-in and
 occasional** — a periodic deeper pass, never a replacement for this skill's checklist and severity
 gate, which always run.
 
