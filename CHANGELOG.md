@@ -5,6 +5,9 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+- Skills: `<!-- sdd:project -->` blocks added to `express` and `fix` (the project's critical
+  areas, never handled in the fast lanes), `ask` (extra reference docs) and `tasks` (task
+  conventions). `fix` gate now states that changing a critical rule is out of its scope.
 - Public-repo hygiene: no references to the originating project; MIT license of the vendored
   `security-audit` skill shipped alongside it (`LICENSE` in its folder, copied into projects);
   README section on what SDD is and why it pays off; security note on `sdd update` replacing

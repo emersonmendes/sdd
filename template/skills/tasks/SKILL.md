@@ -47,6 +47,11 @@ Act as a **Software Engineer**.
 - Order tasks so each step leaves the project building and tests green (schema/contract →
   business code → adapters/UI → tests → docs).
 - Token hygiene: the spec is the input — read source code only where needed to place a task.
+<!-- sdd:project -->
+(setup: add project-specific task conventions — e.g. "database migrations are tasks in the
+sibling repo `../db`", "frontend behavior gets manual validation steps instead of test tasks".
+Delete this paragraph.)
+<!-- /sdd:project -->
 - **Do NOT implement code yet.**
 
 ## Expected output

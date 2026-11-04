@@ -25,6 +25,13 @@ This skill is only valid when **all** of these hold:
 - It fits within that spec's requirements and acceptance criteria — you are **not** introducing
   a new capability, flow, or business rule.
 - It is bounded (roughly a handful of files in one or two modules).
+- It does **not change a critical rule**. Fixing a bug in a critical area so it obeys the spec
+  again is acceptable; changing the rule is not.
+<!-- sdd:project -->
+(setup: list this project's critical areas — the same list as in `{{PREFIX}}.express` — and any
+small change that is explicitly allowed in this lane, e.g. "adding i18n keys via a new migration".
+Delete this paragraph.)
+<!-- /sdd:project -->
 
 If any fails — **new capability, no owning spec, or a real business rule changes** — **STOP** and
 route to the full flow: `/{{PREFIX}}.go` (or `/{{PREFIX}}.start` for just the spec). Do **not**

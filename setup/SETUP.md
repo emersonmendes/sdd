@@ -111,8 +111,9 @@ Work through every file that contains `(setup:` and every `<!-- sdd:project -->`
    plus the commit convention. Delete sections that do not apply.
 4. **`docs/Product.md`** — from the interview and the README, in the project language.
 5. **Skills' project blocks** — `code` (implementation notes), `review` (project checklist
-   lines), `security` (stack-specific checks), `screen` (shared UI patterns, if enabled). Replace
-   the guidance with project facts or leave the block empty; keep the markers.
+   lines), `security` (stack-specific checks), `tasks` (task conventions), `express` and `fix`
+   (the project's critical areas), `ask` (extra reference docs), `screen` (shared UI patterns, if
+   enabled). Replace the guidance with project facts or leave the block empty; keep the markers.
 6. **Specialist agents** (if chosen) — for each app, copy
    `<template clone>/template/agents/_dev.template.md` to `.claude/agents/<app>-dev.md` and fill
    `{{APP}}`, `{{APP_ROLE}}`, `{{APP_PATH}}`, `{{APP_STACK}}`, `{{TEST_CMD}}`, `{{LINT_CMD}}`,

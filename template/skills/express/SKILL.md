@@ -28,6 +28,11 @@ if **any** of these hold, it is **not** simple:
 - Touches **many modules** or crosses several layers with non-obvious flows.
 - **Ambiguous or under-specified** requirements — you'd have to infer or make product decisions.
 - Any acceptance criterion you cannot state precisely from the description alone.
+<!-- sdd:project -->
+(setup: list this project's critical areas — modules, flows or rules where any change is never
+simple, e.g. "access grant/deny decisions, device synchronization, authentication". One line each.
+Delete this paragraph.)
+<!-- /sdd:project -->
 
 If the feature is simple (a bounded CRUD, a self-contained screen/endpoint, a clear small flow with
 no critical rule/integration), **proceed**. Otherwise **STOP immediately** and tell the user:

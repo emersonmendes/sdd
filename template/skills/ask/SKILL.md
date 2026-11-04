@@ -32,6 +32,11 @@ Ground every answer in the project's own decisions — do not invent architectur
 - Cross-cutting mechanics (naming, i18n, API docs, DB, env, commands) → `ai/conventions.md`
 - Feature behavior → `/specs/<feature>/` (`spec.md`, `rules.md`, `flows.md`)
 - Non-negotiable rules → `CLAUDE.md`
+<!-- sdd:project -->
+(setup: add the project's other reference docs here, one line each with what they answer — e.g.
+`ai/architecture.md` for naming conventions, `docs/Architecture.md` for runtime shape. Delete this
+paragraph.)
+<!-- /sdd:project -->
 
 If a question touches a specific feature, read its spec before answering. If the docs and the
 question conflict, surface the conflict — don't paper over it. Read only what the question needs.
