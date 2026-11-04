@@ -1,0 +1,16 @@
+# Skills shipped by the template. Format: <name> <default: on|off> <summary>
+# `on` skills are enabled by default at setup; `off` ones are opt-in questions.
+start          on   SDD step 1 — spec.md, flows.md, rules.md
+tasks          on   SDD step 2 — tasks.md from the spec
+code           on   SDD step 3 — implement from tasks.md, with tests and clean lint
+review         on   SDD step 4 — compliance, clean-code and test-quality report
+security       on   SDD step 5 — AppSec analysis with severity gate
+go             on   Full workflow with a check-point after each step
+express        on   Token-lean workflow for simple features (no questions, no review)
+fix            on   Small change to an already-specified feature
+ask            on   Technical/architecture advisor (no code)
+reverse        on   Spec from existing code (brings legacy features under SDD)
+commit         on   One clean commit per touched repository
+update         on   Sync the project with this template
+screen         off  Screen-design prompt generator for Claude Design (UI projects)
+security-audit off  Vendored Cloudflare security-audit skill for periodic deep audits
