@@ -5,6 +5,8 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+## v0.2.0 — 2026-11-04
+
 - Leak prevention. `commit` gains a mandatory **leak scan** on the staged changes of every
   repository — forbidden files (`.env*`, key material, credential stores, infrastructure state,
   dumps, exports, HAR/log files), secret literals (provider keys, private keys, JWTs,
