@@ -1,4 +1,4 @@
-# sdd — Spec-Driven Development template for Claude Code
+# SDD — Spec-Driven Development template for Claude Code
 
 [Português (Brasil)](README.pt-BR.md)
 
