@@ -158,7 +158,7 @@ resolve_template() { # template_arg -> prints dir
     printf '%s' "$arg"
   else
     dir="$(tmpdir)/template"
-    log "cloning $SDD_TEMPLATE_REPO ..."
+    log "cloning $SDD_TEMPLATE_REPO ..." >&2
     git clone --quiet "$SDD_TEMPLATE_REPO" "$dir" || die "could not clone $SDD_TEMPLATE_REPO"
     printf '%s' "$dir"
   fi

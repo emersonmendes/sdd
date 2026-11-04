@@ -27,6 +27,7 @@ echo "== init"
 P="$WORK/proj"; mkdir -p "$P/.sdd"; gitc -C "$P" init -q -b main
 ALL_SKILLS="$(awk '!/^#/ && NF {print $1}' "$ROOT/template/manifest" | tr '\n' ' ')"
 cat > "$P/.sdd/config" <<CFG
+SDD_TEMPLATE_REPO=$WORK/tpl
 SDD_PREFIX=demo
 SDD_PROJECT_NAME="Demo App & Co"
 SDD_LANGUAGE=Português (Brasil)
@@ -143,6 +144,14 @@ check "config advanced to v0.0.2" "grep -q '^SDD_TEMPLATE_VERSION=v0.0.2' '$P/.s
 ( cd "$P" && bash .sdd/sdd diff --template "$T" .claude/skills/demo.code/SKILL.md >"$WORK/out" 2>&1 ); check "diff shows customization" "grep -q '^+.*project tweak' '$WORK/out'"
 ( cd "$P" && bash .sdd/sdd update --template "$T" >"$WORK/out" 2>&1 ); check "update is idempotent" "grep -q 'already at v0.0.2' '$WORK/out'"
 check "pin by tag works" "cd '$P' && sed -i 's/^SDD_TEMPLATE_REF=.*/SDD_TEMPLATE_REF=$(git -C "$T" rev-parse v0.0.1)/' .sdd/config && git checkout -q -- .claude && bash .sdd/sdd update --template '$T' --ref v0.0.2 >/dev/null 2>&1; grep -q '^SDD_TEMPLATE_VERSION=v0.0.2' .sdd/config"
+
+echo "== update/status/diff without --template (clone from SDD_TEMPLATE_REPO)"
+( cd "$P" && sed -i "s/^SDD_TEMPLATE_REF=.*/SDD_TEMPLATE_REF=$(git -C "$T" rev-parse v0.0.1)/" .sdd/config && git checkout -q -- .claude )
+set +e; out="$(cd "$P" && bash .sdd/sdd update --ref v0.0.2 2>&1)"; rc=$?; set -e
+check "update clones the template when --template is absent" "[ $rc -ne 1 ] && ! printf '%s' \"\$out\" | grep -q '^error:' && printf '%s' \"\$out\" | grep -q 'sdd update: v0.0.1 -> v0.0.2'"
+check "config advanced after the cloned update" "grep -q '^SDD_TEMPLATE_VERSION=v0.0.2' '$P/.sdd/config'"
+( cd "$P" && bash .sdd/sdd status >"$WORK/out" 2>&1 ); check "status without --template sees latest and customizations" "grep -q 'latest   : up to date' '$WORK/out' && grep -q 'customized:' '$WORK/out'"
+( cd "$P" && bash .sdd/sdd diff .claude/skills/demo.code/SKILL.md >"$WORK/out" 2>&1 ); check "diff without --template shows customization" "grep -q '^+.*project tweak' '$WORK/out'"
 
 echo "== template hygiene"
 check "only rendered placeholders in skills, scaffold, techlead, bin" "! grep -rhoE '\{\{[A-Z_]+\}\}' '$ROOT/template/skills' '$ROOT/template/project' '$ROOT/template/agents/techlead.md' '$ROOT/bin' | sort -u | grep -vE '^\{\{(PREFIX|PROJECT_NAME|LANGUAGE|MODEL_IMPLEMENT|MODEL_LEAD)\}\}$' | grep -q ."
