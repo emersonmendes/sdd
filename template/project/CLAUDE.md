@@ -43,6 +43,7 @@ Before any code change:
 8. Check that spec and implementation do not diverge.
 9. Run the security analysis (`/{{PREFIX}}.security`) — no open Critical/High finding before
    finishing.
+10. Commit through `/{{PREFIX}}.commit` — nothing reaches the repository without its leak scan.
 
 Lanes: `/{{PREFIX}}.go` (full workflow with check-points) · `/{{PREFIX}}.express` (simple
 features, no questions) · `/{{PREFIX}}.fix` (small change to a specified feature) ·
@@ -59,6 +60,11 @@ features, no questions) · `/{{PREFIX}}.fix` (small change to a specified featur
 - Writes that must succeed or fail together (as the spec states) run in one transaction.
 - Lint clean and tests green before a change is done — commands in
   [`/ai/conventions.md#commands`](ai/conventions.md#commands).
+- Never commit secrets, credentials, `.env*` files, dumps or real personal data; commit through
+  `/{{PREFIX}}.commit`, whose leak scan must pass
+  ([`/ai/conventions.md#secrets-and-sensitive-files`](ai/conventions.md#secrets-and-sensitive-files)).
+- Never weaken a security control (TLS verification, auth/CSRF/CORS guards, debug modes) to make
+  something work; if a task needs it, the spec is wrong — ask.
 - If spec and code diverge, fix the spec first.
 - When editing docs or skills, follow [`/ai/docs-authoring-rules.md`](ai/docs-authoring-rules.md)
   — one fact one home, no duplication, keep always-loaded files lean without dropping rules.

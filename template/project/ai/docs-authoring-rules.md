@@ -38,8 +38,9 @@ and mechanics go in an on-demand file. Never inline a multi-sentence explanation
 - Moving detail out of `CLAUDE.md` is fine **only if** it lands in a linked on-demand file. Move,
   don't delete.
 - Never weaken or remove: STOP/prerequisite gates, the `review` checklist, the `security`
-  checklist and severity gate, the `code` "Non-negotiable rules" and "Clean code baseline", and
-  the `go` check-point protocol. These guard quality, not tokens.
+  checklist and severity gate, the `code` "Non-negotiable rules" and "Clean code baseline", the
+  `commit` gate and "Leak scan", and the `go` check-point protocol. These guard quality, not
+  tokens.
 
 ## 4. Skill authoring
 

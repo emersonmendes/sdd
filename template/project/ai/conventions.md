@@ -52,6 +52,25 @@ Python 3.12 via `uv`.)
   avoid, e.g. `NEXT_PUBLIC_`, `VITE_`).
 - (setup: how config is loaded and validated at startup.)
 
+## Secrets and sensitive files
+
+- Secrets live in (setup: the secret store or mechanism — platform secret manager, vault, local
+  `.env` kept out of git) and reach the code only through configuration; never as literals.
+- Never in the repository, in any commit: `.env*` (except committed `*.example` templates with
+  placeholders), key material and credential stores, infrastructure state, database dumps and
+  exports, HAR/log files, real personal data. The baseline list and the scan that enforces it are
+  the **Leak scan** of the `/{{PREFIX}}.commit` skill; project-specific patterns and allowed
+  exceptions go in that skill's `<!-- sdd:project -->` block.
+- `.gitignore` carries the baseline patterns — `.env`, `.env.*`, `!.env.example`, `*.pem`,
+  `*.key`, `*.p12`, `*.pfx`, `*.jks`, `*.keystore`, `*.tfstate`, `*.dump`, `*.sqlite*`, `*.har`,
+  `*.log` — plus the project's own. Ignoring is defense in depth; the leak scan is the gate.
+- Fixtures, seeds, snapshots, test data and examples in specs/docs are synthetic: (setup: the
+  project's factory/faker helpers and reserved values, e.g. `example.com`, `.test`, `555`
+  numbers.)
+- A secret that reached a commit is compromised even if removed later: rotate it first, then
+  clean the history only if the team decides to. (setup: who is notified and where rotation
+  happens.)
+
 ## API documentation
 
 (setup: keep if the project has an HTTP API. e.g. "Every endpoint carries OpenAPI decorators;
@@ -87,4 +106,5 @@ faithfully. Otherwise delete.)
   for spec changes and `<app>: subject` for code; choose one and show two examples.)
 - Language of messages: (setup: {{LANGUAGE}} or English.)
 - One commit per touched repository; subject ≤ 72 characters, imperative, says what and why.
-- Never commit secrets, `.env*`, or real personal data. Never push without being asked.
+- Never commit secrets, `.env*` files or real personal data — see
+  [Secrets and sensitive files](#secrets-and-sensitive-files). Never push without being asked.
