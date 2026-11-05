@@ -5,6 +5,8 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+## v0.3.1 — 2026-11-05
+
 - `ask` saves explainers under `docs/answers/` (lowercase) instead of `docs/Answers/`, matching the
   lowercase `docs/` layout used everywhere else. Projects that already have `docs/Answers/` can
   rename the folder or keep their local path; the update merges cleanly either way.
