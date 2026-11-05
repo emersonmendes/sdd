@@ -5,6 +5,9 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+- Repository: `AGENTS.md` and `.agents/skills/sdd.release/` mirror `CLAUDE.md` and the release skill
+  for Codex sessions in this repository. Repo only.
+
 ## v0.4.0 — 2026-11-05
 
 - `bin/sdd`: new `enable <skill>...` (renders an optional skill at the template version the
