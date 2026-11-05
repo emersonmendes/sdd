@@ -31,7 +31,7 @@
 set -euo pipefail
 shopt -u patsub_replacement 2>/dev/null || true
 
-SDD_SCRIPT_VERSION="0.3.1"
+SDD_SCRIPT_VERSION="0.4.0"
 DEFAULT_REPO="https://github.com/emersonmendes/sdd.git"
 
 log()  { printf '%s\n' "$*"; }

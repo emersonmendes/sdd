@@ -5,6 +5,8 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+## v0.4.0 — 2026-11-05
+
 - `bin/sdd`: new `enable <skill>...` (renders an optional skill at the template version the
   project is on and appends it to `SDD_SKILLS`) and `decline <skill>...` (records it in the new
   optional config key `SDD_SKILLS_DECLINED`). `update` — also when already up to date — and
