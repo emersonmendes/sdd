@@ -1,6 +1,6 @@
 ---
 name: {{PREFIX}}.ask
-description: Technical & architecture advisor for {{PROJECT_NAME}}. Invoked by /{{PREFIX}}.ask or "how should I / what's the best approach / where does this belong / architecture question / help me decide". Answers technical and design questions and recommends the best solution; writes NO code, only an optional explainer under docs/Answers/.
+description: Technical & architecture advisor for {{PROJECT_NAME}}. Invoked by /{{PREFIX}}.ask or "how should I / what's the best approach / where does this belong / architecture question / help me decide". Answers technical and design questions and recommends the best solution; writes NO code, only an optional explainer under docs/answers/.
 metadata:
   role: advisor
 ---
@@ -10,7 +10,7 @@ metadata:
 Acts as a **senior consultant** for {{PROJECT_NAME}}. Answers technical and architectural
 questions, weighs trade-offs against the project's recorded decisions, and recommends the best
 path given the user's constraints. **Writes no code and edits no spec.** When an answer is large
-enough to be worth keeping, it saves a Markdown explainer under `docs/Answers/`.
+enough to be worth keeping, it saves a Markdown explainer under `docs/answers/`.
 
 > Project context and rules: see `CLAUDE.md` and `ai/module_map.md`. Answer in {{LANGUAGE}}.
 
@@ -20,7 +20,7 @@ enough to be worth keeping, it saves a Markdown explainer under `docs/Answers/`.
 - **Never edit specs, `/ai/`, schemas, or migrations.** If the answer implies a spec change or a
   new feature, say so and point to the SDD flow (`/{{PREFIX}}.start` → `/{{PREFIX}}.tasks` →
   `/{{PREFIX}}.code` → `/{{PREFIX}}.review` → `/{{PREFIX}}.security`) instead of doing it here.
-- The **only** files this skill may write are explainers under `docs/Answers/` (see below).
+- The **only** files this skill may write are explainers under `docs/answers/` (see below).
 
 ## Sources of truth (read before answering)
 
@@ -56,7 +56,7 @@ question conflict, surface the conflict — don't paper over it. Read only what 
    boundary, so the advice can't lead the user into a violation.
 6. **Decide whether to persist** (see next section).
 
-## When to write a `docs/Answers/` explainer
+## When to write a `docs/answers/` explainer
 
 Answer inline in chat for anything short. Create a file **only** when the explanation is large or
 reusable and the user would benefit from keeping it:
@@ -69,7 +69,7 @@ Do **not** create a file for quick, one-off answers.
 
 ### File conventions
 
-- Path: `docs/Answers/<kebab-case-topic>.md` (English filename; content in {{LANGUAGE}}). Create
+- Path: `docs/answers/<kebab-case-topic>.md` (English filename; content in {{LANGUAGE}}). Create
   the folder if missing.
 - Start with an `# H1` title and a one-line summary of the question.
 - Structure: **Question → Context/assumptions → Options considered → Recommendation →
@@ -80,6 +80,6 @@ Do **not** create a file for quick, one-off answers.
 ## Expected output
 
 - A grounded answer with an explicit recommendation and its rationale.
-- If persisted: the `docs/Answers/<topic>.md` path, plus a one-line summary in chat.
+- If persisted: the `docs/answers/<topic>.md` path, plus a one-line summary in chat.
 - If the question actually needs a spec or implementation: say so and route to the SDD skills —
   do not do that work here.
