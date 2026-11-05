@@ -11,8 +11,16 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
   `status` list the manifest skills the project has neither enabled nor declined. The `update`
   skill asks about them at every update (enable now / not now / never); the setup offers the same
   three answers.
-- Setup (`.sdd/last-scaffold.diff`): `setup/SETUP.md` round 3 offers optional skills as yes / not now /
-  never and documents `SDD_SKILLS_DECLINED`.
+- `screen`: designs live under `docs/screens/` (lowercase, like `docs/answers/`); the consumption
+  rules link to `ai/conventions.md#ui-design-references` instead of a `docs/Screens/README.md`
+  that nothing created; the project block asks for pointers (source of truth for tokens and
+  shared rules with the sections to cite per screen type, stack constraints, reference files,
+  earlier prompts) instead of pasted patterns. Projects that enabled `screen` and filled the block
+  get one conflict hunk there: keep the project's content.
+- Scaffold and setup (`.sdd/last-scaffold.diff`): the "UI design references" guidance in
+  `ai/conventions.md` uses `docs/screens/` and adds "new screens start with `/<prefix>.screen`";
+  `setup/SETUP.md` round 3 offers optional skills as yes / not now / never and documents
+  `SDD_SKILLS_DECLINED`. Rename an existing folder with `git mv docs/Screens docs/screens`.
 - Repository: the default branch is now `master` (`main` was deleted). Transparent for projects:
   `sdd update` follows the remote HEAD and `.sdd/config` stores a commit, not a branch. Local
   clones of the template: `git branch -m main master && git fetch --prune && git branch -u origin/master`.

@@ -97,8 +97,9 @@ delete.)
 ## UI design references
 
 (setup: keep if the project has a UI and uses screen designs. Where designs live
-(`docs/Screens/<actor>-<screen>.html`), the design-tokens doc, and the rule to follow designs
-faithfully. Otherwise delete.)
+(`docs/screens/<actor>-<screen>.html`), the design-tokens doc, the rule to follow designs
+faithfully and — when the `screen` skill is enabled — that new screens start with
+`/{{PREFIX}}.screen`. Otherwise delete.)
 
 ## Commit convention
 

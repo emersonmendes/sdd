@@ -57,7 +57,7 @@ only to confirm the findings)
    data-protection classification (LGPD/GDPR); URL/identifiers in English; no native
    confirm/alert dialogs; design-first UI (screen designs before implementation); never edit
    generated code; lint clean before done.
-2. Optional skills: `screen` (Claude Design prompts; needs `docs/Screens/`), `security-audit`
+2. Optional skills: `screen` (Claude Design prompts; needs `docs/screens/`), `security-audit`
    (vendored Cloudflare deep audit; ~6k lines, opt-in runs only). Offer each as yes / not now /
    never: "never" goes to `SDD_SKILLS_DECLINED` (Phase 3); otherwise `/<prefix>.update` offers
    the skill again at every update and `bash .sdd/sdd enable <skill>` adds it later. `commit` is

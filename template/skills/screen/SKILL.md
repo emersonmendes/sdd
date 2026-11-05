@@ -1,6 +1,6 @@
 ---
 name: {{PREFIX}}.screen
-description: Screen-design prompt generator. Invoked by /{{PREFIX}}.screen or "create a screen prompt / design a screen / prompt for Claude Design". Outputs a ready-to-paste prompt for the {{PROJECT_NAME}} Claude Design project plus the target `docs/Screens/` filename; writes no code and no files.
+description: Screen-design prompt generator. Invoked by /{{PREFIX}}.screen or "create a screen prompt / design a screen / prompt for Claude Design". Outputs a ready-to-paste prompt for the {{PROJECT_NAME}} Claude Design project plus the target `docs/screens/` filename; writes no code and no files.
 metadata:
   role: design-prompter
   related: {{PREFIX}}.ask, {{PREFIX}}.start, {{PREFIX}}.code
@@ -10,8 +10,8 @@ metadata:
 
 Turns a short screen request (e.g. "the client's chat screen") into a **complete, screen-specific
 prompt** for the {{PROJECT_NAME}} project in Claude Design. The user pastes it there, exports the
-HTML and saves it under `docs/Screens/`, where it later serves as the visual reference for
-implementation (consumption rules: `docs/Screens/README.md`).
+HTML and saves it under `docs/screens/`, where it later serves as the visual reference for
+implementation (rules: [UI design references](../../../ai/conventions.md#ui-design-references)).
 
 > Project context and rules: see `CLAUDE.md` and `ai/module_map.md`. The prompt is written in
 > {{LANGUAGE}}.
@@ -31,7 +31,7 @@ implementation (consumption rules: `docs/Screens/README.md`).
 - `/specs/<feature>/` matching the screen, if one exists — requirements, states, edge cases and
   business rules **override** anything you would infer. Never invent rules a spec doesn't state;
   if none exists, mark assumptions explicitly in the prompt.
-- `docs/Screens/*.html` names (and the closest neighbor's content when relevant) — keep
+- `docs/screens/*.html` names (and the closest neighbor's content when relevant) — keep
   navigation, headers, component patterns and sample data consistent across screens, and avoid
   duplicating a screen that already exists (propose a variation/update instead).
 - The design-tokens doc (if the project has one) — token names only, when the screen needs a
@@ -42,7 +42,7 @@ implementation (consumption rules: `docs/Screens/README.md`).
 1. **Identify** actor/role, journey, the screen's place in the flow (what comes before/after) and
    its goal. Ask 1–3 sharp questions via `AskUserQuestion` **only** if the actor or the screen's
    purpose is genuinely ambiguous; otherwise state assumptions.
-2. **Pick the filename**: `docs/Screens/<actor>-<screen>.html`, English kebab-case
+2. **Pick the filename**: `docs/screens/<actor>-<screen>.html`, English kebab-case
    (`client-home`, `admin-users`). Variations get a suffix (`-empty`, `-v2`).
 3. **Write the prompt** in {{LANGUAGE}} using the template below — concrete, ordered top-to-bottom,
    with realistic **synthetic** sample data for the product's locale (never real customer data —
@@ -90,8 +90,11 @@ tokens and i18n keys during implementation.
 ## Shared UI patterns
 
 <!-- sdd:project -->
-(setup: when the project has shared UI patterns the design tool must reproduce verbatim — e.g.
-table actions column, pagination, form layout — paste each pattern here as a fenced block in
-{{LANGUAGE}} with the rule "paste verbatim into the prompt for screens of type X". Delete this
-paragraph if there are none yet.)
+(setup: what the design tool must get right for this project, as pointers rather than copies:
+the single source of truth for design tokens and shared UI rules (a spec, a tokens doc) and
+which sections to cite per screen type — list, form/modal, timeline…; stack constraints the
+design must not fight (CSS framework and version, icon set, component library); files to attach
+to the prompt as visual reference; where earlier prompts live (e.g. `docs/answers/`). Paste a
+pattern verbatim only when it is short and has no other home. Delete this paragraph if there
+are none yet.)
 <!-- /sdd:project -->
