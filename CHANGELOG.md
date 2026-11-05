@@ -5,8 +5,8 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
-- Repository: `AGENTS.md` and `.agents/skills/sdd.release/` mirror `CLAUDE.md` and the release skill
-  for Codex sessions in this repository. Repo only.
+- Repository: `AGENTS.md` points Codex sessions to `CLAUDE.md`; `.agents/skills/sdd.release` is a
+  symlink to the `.claude` skill. Repo only.
 
 ## v0.4.0 — 2026-11-05
 
