@@ -5,6 +5,8 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+## v0.3.0 — 2026-11-04
+
 - `commit` can now push. After the commits and the report, a new step asks (`AskUserQuestion`)
   whether to push each repository with new commits, listing branch, upstream and outgoing
   commits and flagging the default/protected branch. Outgoing commits not created by the run go
