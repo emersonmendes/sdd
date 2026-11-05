@@ -5,6 +5,14 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+- `bin/sdd`: new `enable <skill>...` (renders an optional skill at the template version the
+  project is on and appends it to `SDD_SKILLS`) and `decline <skill>...` (records it in the new
+  optional config key `SDD_SKILLS_DECLINED`). `update` — also when already up to date — and
+  `status` list the manifest skills the project has neither enabled nor declined. The `update`
+  skill asks about them at every update (enable now / not now / never); the setup offers the same
+  three answers.
+- Setup (`.sdd/last-scaffold.diff`): `setup/SETUP.md` round 3 offers optional skills as yes / not now /
+  never and documents `SDD_SKILLS_DECLINED`.
 - Repository: the default branch is now `master` (`main` was deleted). Transparent for projects:
   `sdd update` follows the remote HEAD and `.sdd/config` stores a commit, not a branch. Local
   clones of the template: `git branch -m main master && git fetch --prune && git branch -u origin/master`.

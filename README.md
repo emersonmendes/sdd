@@ -118,8 +118,9 @@ Each project records the template commit it was rendered from in `.sdd/config`. 
 ```
 /<prefix>.update          # in Claude Code — runs the script, resolves conflicts, verifies
 bash .sdd/sdd update      # or by hand; add --ref v0.2.0 to pin a version
-bash .sdd/sdd status      # template version, latest remote, customized files
+bash .sdd/sdd status      # template version, latest remote, customized files, optional skills
 bash .sdd/sdd diff        # the project's customizations vs the pristine render
+bash .sdd/sdd enable screen    # add an optional skill later (`decline <skill>` stops the offer)
 ```
 
 How the merge works: for every managed file (skills, `techlead` agent, the script itself), the
@@ -132,6 +133,11 @@ overwrites them.
 
 Customize skills inside their `<!-- sdd:project -->` blocks; generic improvements belong here —
 `bash .sdd/sdd diff <file>` gives you the patch to contribute.
+
+Optional skills (`screen`, `security-audit`) not chosen at setup stay on offer: `update` and
+`status` list them until the project runs `bash .sdd/sdd enable <skill>` (renders it at the
+project's template version) or `bash .sdd/sdd decline <skill>`; `/<prefix>.update` asks at every
+update.
 
 Security note: `sdd update` replaces `.sdd/sdd` with the template's script and rewrites the
 managed skills, so point `SDD_TEMPLATE_REPO` only at a repository you trust (your own fork is a

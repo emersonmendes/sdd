@@ -31,12 +31,20 @@ customized.
    the setup docs), read it and propose the equivalent edits to the project's own files — those
    are project-owned and are never merged automatically. Apply what the user accepts, then delete
    the diff file.
-5. **Verify**: no `{{...}}` placeholders and no conflict markers left in `.claude/`, `CLAUDE.md`,
+5. **Optional skills**: when the script lists `optional (not enabled): <skill> — <summary>`,
+   ask with `AskUserQuestion` (multi-select) which ones to enable now, with "not now" (offered
+   again next update) and "never for this project" as options. Enable:
+   `bash .sdd/sdd enable <skill>` renders the skill at the project's template version and adds
+   it to `SDD_SKILLS`; then fill its `<!-- sdd:project -->` block following the `(setup: …)`
+   guidance inside it and the matching section of `ai/conventions.md` (e.g. `screen` → "UI design
+   references", re-created from the template scaffold if the setup deleted it). Never:
+   `bash .sdd/sdd decline <skill>`.
+6. **Verify**: no `{{...}}` placeholders and no conflict markers left in `.claude/`, `CLAUDE.md`,
    `ai/` (`bash .sdd/sdd status` lists leftovers); relative links in the updated skills resolve;
    every skill's frontmatter `description` kept its routing triggers; each `<!-- sdd:project -->`
    block still holds the project's content.
-6. **Report** per file (updated / merged / conflict resolved / kept / new), the version change,
-   and suggest `/{{PREFIX}}.commit`.
+7. **Report** per file (updated / merged / conflict resolved / kept / new / enabled), the
+   version change, and suggest `/{{PREFIX}}.commit`.
 
 ## Contributing back
 

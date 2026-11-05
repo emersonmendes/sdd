@@ -22,7 +22,7 @@ update.**
 | `template/agents/_dev.template.md` | Per-app specialist agent | Instantiated by the setup; changes reported, never merged |
 | `template/project/` | Scaffold: `CLAUDE.md`, `ai/`, `specs/_template/`, `docs/Product.md` | Copied once at init; changes reported in `.sdd/last-scaffold.diff` |
 | `template/manifest` | Skill list and defaults | Read by the setup |
-| `bin/sdd` | `init` / `update` / `status` / `diff` | Installed as `.sdd/sdd`, replaced on update |
+| `bin/sdd` | `init` / `update` / `status` / `diff` / `enable` / `decline` | Installed as `.sdd/sdd`, replaced on update |
 | `setup/` | Setup and reverse-engineering protocols | Read by the assistant during setup |
 | `scripts/smoke-test.sh` | End-to-end test of render, customize, update, conflict, status, diff | Repo only |
 | `README.md`, `README.pt-BR.md`, `CHANGELOG.md` | Docs | Repo only; keep EN and PT in sync |

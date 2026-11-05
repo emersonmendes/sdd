@@ -125,8 +125,9 @@ Cada projeto registra em `.sdd/config` o commit do template usado na renderizaç
 ```
 /<prefixo>.update         # no Claude Code — roda o script, resolve conflitos, verifica
 bash .sdd/sdd update      # ou manualmente; --ref v0.2.0 fixa uma versão
-bash .sdd/sdd status      # versão do template, último remoto, arquivos personalizados
+bash .sdd/sdd status      # versão do template, último remoto, arquivos personalizados, skills opcionais
 bash .sdd/sdd diff        # personalizações do projeto vs. renderização original
+bash .sdd/sdd enable screen    # adiciona uma skill opcional depois (`decline <skill>` para de oferecer)
 ```
 
 Como o merge funciona: para cada arquivo gerenciado (skills, agente `techlead`, o próprio script),
@@ -139,6 +140,11 @@ resolver. Arquivos de scaffold (`CLAUDE.md`, `ai/*`, `specs/_template`, `docs/Pr
 
 Personalize as skills dentro dos blocos `<!-- sdd:project -->`; melhorias genéricas pertencem aqui —
 `bash .sdd/sdd diff <arquivo>` gera o patch para contribuir.
+
+Skills opcionais (`screen`, `security-audit`) não escolhidas no setup continuam em oferta: `update`
+e `status` as listam até o projeto rodar `bash .sdd/sdd enable <skill>` (renderiza na versão do
+template em que o projeto está) ou `bash .sdd/sdd decline <skill>`; o `/<prefixo>.update` pergunta
+a cada atualização.
 
 Nota de segurança: o `sdd update` substitui o `.sdd/sdd` pelo script do template e reescreve as
 skills gerenciadas, então aponte `SDD_TEMPLATE_REPO` só para um repositório em que você confia (o

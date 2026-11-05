@@ -58,9 +58,11 @@ only to confirm the findings)
    confirm/alert dialogs; design-first UI (screen designs before implementation); never edit
    generated code; lint clean before done.
 2. Optional skills: `screen` (Claude Design prompts; needs `docs/Screens/`), `security-audit`
-   (vendored Cloudflare deep audit; ~6k lines, opt-in runs only). `commit` is on by default —
-   ask the commit convention (Conventional Commits (Recommended) / `scope: subject` / custom)
-   and the message language.
+   (vendored Cloudflare deep audit; ~6k lines, opt-in runs only). Offer each as yes / not now /
+   never: "never" goes to `SDD_SKILLS_DECLINED` (Phase 3); otherwise `/<prefix>.update` offers
+   the skill again at every update and `bash .sdd/sdd enable <skill>` adds it later. `commit` is
+   on by default — ask the commit convention (Conventional Commits (Recommended) /
+   `scope: subject` / custom) and the message language.
 3. Specialist agents: generate one `<app>-dev` agent per app for parallel delegation —
    recommended when there are two or more apps; skip for a single app.
 4. Models: implement = `sonnet`, lead = `opus` (defaults; change only if the user asks).
@@ -88,7 +90,8 @@ the uncertain findings with the user (that is round 2 of the interview), then co
    SDD_SKILLS="start tasks code review security go express fix ask reverse commit update"
    ```
 
-   Append `screen` and/or `security-audit` to `SDD_SKILLS` when chosen. `SDD_TEMPLATE_REF` and
+   Append `screen` and/or `security-audit` to `SDD_SKILLS` when chosen; list the ones refused
+   for good in `SDD_SKILLS_DECLINED="…"` (optional line). `SDD_TEMPLATE_REF` and
    `SDD_TEMPLATE_VERSION` are written by the script.
 2. Run `bash <template clone>/bin/sdd init --template <template clone>` from the target root. It
    renders the skills into `.claude/skills/<prefix>.*`, the `techlead` agent, installs

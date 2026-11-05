@@ -89,7 +89,7 @@ fi
 echo "== default skill set (no optional skills): render + links"
 D="$WORK/proj-default"; mkdir -p "$D/.sdd"; gitc -C "$D" init -q -b master
 DEFAULT_SKILLS="$(awk '!/^#/ && $2 == "on" {print $1}' "$ROOT/template/manifest" | tr '\n' ' ')"
-printf 'SDD_PREFIX=base\nSDD_SKILLS="%s"\n' "$DEFAULT_SKILLS" > "$D/.sdd/config"
+printf 'SDD_TEMPLATE_REPO=%s\nSDD_PREFIX=base\nSDD_SKILLS="%s"\n' "$WORK/tpl" "$DEFAULT_SKILLS" > "$D/.sdd/config"
 ( cd "$D" && bash "$WORK/tpl/bin/sdd" init --template "$WORK/tpl" >/dev/null ); ok "default set rendered"
 if command -v python3 >/dev/null; then
   python3 -I - "$D" <<'PY' || bad "link check (default set)"
@@ -152,6 +152,19 @@ check "update clones the template when --template is absent" "[ $rc -ne 1 ] && !
 check "config advanced after the cloned update" "grep -q '^SDD_TEMPLATE_VERSION=v0.0.2' '$P/.sdd/config'"
 ( cd "$P" && bash .sdd/sdd status >"$WORK/out" 2>&1 ); check "status without --template sees latest and customizations" "grep -q 'latest   : up to date' '$WORK/out' && grep -q 'customized:' '$WORK/out'"
 ( cd "$P" && bash .sdd/sdd diff .claude/skills/demo.code/SKILL.md >"$WORK/out" 2>&1 ); check "diff without --template shows customization" "grep -q '^+.*project tweak' '$WORK/out'"
+
+echo "== optional skills: offered by update/status, enable, decline"
+( cd "$D" && bash .sdd/sdd update --template "$T" >"$WORK/out" 2>&1 ); check "update lists the optional skills not enabled" "grep -q 'sdd update: v0.0.1 -> v0.0.2' '$WORK/out' && grep -q 'optional (not enabled): screen — ' '$WORK/out' && grep -q 'optional (not enabled): security-audit — ' '$WORK/out'"
+( cd "$D" && bash .sdd/sdd update --template "$T" >"$WORK/out" 2>&1 ); check "update already current still lists them" "grep -q 'already at v0.0.2' '$WORK/out' && grep -q 'optional (not enabled): screen' '$WORK/out'"
+( cd "$D" && bash .sdd/sdd decline security-audit >"$WORK/out" 2>&1 ); check "decline records the skill in config" "grep -q '^SDD_SKILLS_DECLINED=\"security-audit\"$' '$D/.sdd/config'"
+( cd "$D" && bash .sdd/sdd status --template "$T" >"$WORK/out" 2>&1 ); check "status offers screen but not the declined skill" "grep -q 'optional (not enabled): screen' '$WORK/out' && ! grep -q 'security-audit' '$WORK/out'"
+set +e; ( cd "$D" && bash .sdd/sdd enable nope --template "$T" >"$WORK/out" 2>&1 ); rc=$?; set -e
+check "enable rejects a skill the template version lacks" "[ $rc -eq 1 ] && grep -q 'not in template version' '$WORK/out'"
+( cd "$D" && bash .sdd/sdd enable screen --template "$T" >"$WORK/out" 2>&1 ); check "enable renders the skill with the prefix" "grep -q 'files written: 1' '$WORK/out' && grep -q '^name: base.screen$' '$D/.claude/skills/base.screen/SKILL.md' && ! grep -q '{{' '$D/.claude/skills/base.screen/SKILL.md'"
+check "enable appends the skill to SDD_SKILLS" "grep -q '^SDD_SKILLS=\".* update screen\"$' '$D/.sdd/config'"
+( cd "$D" && bash .sdd/sdd status --template "$T" >"$WORK/out" 2>&1 ); check "enabled skill is pristine and no longer offered" "grep -q 'managed files: all pristine' '$WORK/out' && ! grep -q 'optional (not enabled)' '$WORK/out'"
+( cd "$D" && bash .sdd/sdd enable screen --template "$T" >"$WORK/out" 2>&1 ); check "enable is idempotent" "grep -q 'already enabled' '$WORK/out'"
+( cd "$D" && bash .sdd/sdd enable security-audit --template "$T" >"$WORK/out" 2>&1 ); check "enable undoes a decline" "grep -q '^SDD_SKILLS_DECLINED=\"\"$' '$D/.sdd/config' && [ -f '$D/.claude/skills/base.security-audit/SKILL.md' ]"
 
 echo "== template hygiene"
 check "only rendered placeholders in skills, scaffold, techlead, bin" "! grep -rhoE '\{\{[A-Z_]+\}\}' '$ROOT/template/skills' '$ROOT/template/project' '$ROOT/template/agents/techlead.md' '$ROOT/bin' | sort -u | grep -vE '^\{\{(PREFIX|PROJECT_NAME|LANGUAGE|MODEL_IMPLEMENT|MODEL_LEAD)\}\}$' | grep -q ."
