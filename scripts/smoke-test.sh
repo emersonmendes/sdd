@@ -18,13 +18,13 @@ gitc() { git -c user.email=smoke@test -c user.name=smoke "$@"; }
 echo "== template copy (working tree) → v1"
 mkdir -p "$WORK/tpl"
 tar --exclude=.git -C "$ROOT" -cf - . | tar -xf - -C "$WORK/tpl"
-gitc -C "$WORK/tpl" init -q -b main
+gitc -C "$WORK/tpl" init -q -b master
 gitc -C "$WORK/tpl" add -A
 gitc -C "$WORK/tpl" commit -qm "v1"
 gitc -C "$WORK/tpl" tag v0.0.1
 
 echo "== init"
-P="$WORK/proj"; mkdir -p "$P/.sdd"; gitc -C "$P" init -q -b main
+P="$WORK/proj"; mkdir -p "$P/.sdd"; gitc -C "$P" init -q -b master
 ALL_SKILLS="$(awk '!/^#/ && NF {print $1}' "$ROOT/template/manifest" | tr '\n' ' ')"
 cat > "$P/.sdd/config" <<CFG
 SDD_TEMPLATE_REPO=$WORK/tpl
@@ -87,7 +87,7 @@ else
 fi
 
 echo "== default skill set (no optional skills): render + links"
-D="$WORK/proj-default"; mkdir -p "$D/.sdd"; gitc -C "$D" init -q -b main
+D="$WORK/proj-default"; mkdir -p "$D/.sdd"; gitc -C "$D" init -q -b master
 DEFAULT_SKILLS="$(awk '!/^#/ && $2 == "on" {print $1}' "$ROOT/template/manifest" | tr '\n' ' ')"
 printf 'SDD_PREFIX=base\nSDD_SKILLS="%s"\n' "$DEFAULT_SKILLS" > "$D/.sdd/config"
 ( cd "$D" && bash "$WORK/tpl/bin/sdd" init --template "$WORK/tpl" >/dev/null ); ok "default set rendered"

@@ -11,7 +11,7 @@ metadata:
 
 ## Gate
 
-- Working tree clean except the release edits; `main` checked out and up to date with `origin`.
+- Working tree clean except the release edits; `master` checked out and up to date with `origin`.
 - `bash scripts/smoke-test.sh` passes. If it fails, STOP and report — no release on a red test.
 - `## Unreleased` in `CHANGELOG.md` is non-empty. If empty, STOP: nothing to release.
 
@@ -26,7 +26,7 @@ metadata:
 3. **Bump** `SDD_SCRIPT_VERSION` in `bin/sdd` to `X.Y.Z`.
 4. **Commit** `release: vX.Y.Z` with the attribution trailer the environment requires.
 5. **Tag**: `git tag -a vX.Y.Z -m "vX.Y.Z"`.
-6. **Push** `main` and the tag — only after the user confirmed the release (the invocation counts
+6. **Push** `master` and the tag — only after the user confirmed the release (the invocation counts
    as confirmation when it names the version).
 7. **Report**: version, commit hash, tag, and the one-liner projects run to pin it:
    `bash .sdd/sdd update --ref vX.Y.Z`.

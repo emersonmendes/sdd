@@ -75,7 +75,7 @@ update.**
 ## Releasing
 
 Use `/sdd.release` or do it by hand: move `## Unreleased` to `## vX.Y.Z — YYYY-MM-DD`, bump
-`SDD_SCRIPT_VERSION` in `bin/sdd`, commit `release: vX.Y.Z`, annotated tag `vX.Y.Z`, push `main`
+`SDD_SCRIPT_VERSION` in `bin/sdd`, commit `release: vX.Y.Z`, annotated tag `vX.Y.Z`, push `master`
 and the tag. Projects pin a release with `bash .sdd/sdd update --ref vX.Y.Z`.
 
 ## Commits

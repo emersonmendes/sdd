@@ -5,6 +5,10 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+- Repository: the default branch is now `master` (`main` was deleted). Transparent for projects:
+  `sdd update` follows the remote HEAD and `.sdd/config` stores a commit, not a branch. Local
+  clones of the template: `git branch -m main master && git fetch --prune && git branch -u origin/master`.
+
 ## v0.3.1 — 2026-11-05
 
 - `ask` saves explainers under `docs/answers/` (lowercase) instead of `docs/Answers/`, matching the
