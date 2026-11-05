@@ -53,7 +53,7 @@ Skip it for throwaway prototypes and one-off scripts. Use it for anything you wi
 | `/<prefix>.fix` | Small change to an already-specified feature, with inline self-review and security pass |
 | `/<prefix>.reverse` | Spec from existing code — brings legacy features under SDD |
 | `/<prefix>.ask` | Architecture/technical advisor; writes no code |
-| `/<prefix>.commit` | Leak scan on the staged changes (secrets, forbidden files, real data, weakened controls, untrusted dependencies), then one clean commit per touched repository; never pushes |
+| `/<prefix>.commit` | Leak scan on the staged changes (secrets, forbidden files, real data, weakened controls, untrusted dependencies), then one clean commit per touched repository; asks before pushing |
 | `/<prefix>.update` | Sync the project with this template |
 | `/<prefix>.screen` (optional) | Prompt generator for Claude Design screens |
 | `/<prefix>.security-audit` (optional) | Vendored [Cloudflare security-audit](https://github.com/cloudflare/security-audit-skill) for periodic deep audits |
@@ -106,7 +106,7 @@ The chosen language applies to the conversation, reports, commits, `/specs` and 
 /<prefix>.fix <small change>               # change to a specified feature
 /<prefix>.reverse <existing feature>       # write the spec of what the code does today
 /<prefix>.ask <question>                   # advice, no code
-/<prefix>.commit                           # one commit per touched repo
+/<prefix>.commit                           # one commit per touched repo, then asks to push
 ```
 
 Or run the main session as the tech lead: `claude --agent techlead`.

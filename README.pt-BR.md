@@ -54,7 +54,7 @@ Pule em protótipos descartáveis e scripts de uma vez só. Use em qualquer cois
 | `/<prefixo>.fix` | Mudança pequena em feature já especificada, com auto-revisão inline e passagem de segurança |
 | `/<prefixo>.reverse` | Spec a partir de código existente — traz features legadas para o SDD |
 | `/<prefixo>.ask` | Consultor técnico/arquitetura; não escreve código |
-| `/<prefixo>.commit` | Varredura de vazamento no diff staged (segredos, arquivos proibidos, dados reais, controles enfraquecidos, dependências não confiáveis), depois um commit limpo por repositório tocado; nunca faz push |
+| `/<prefixo>.commit` | Varredura de vazamento no diff staged (segredos, arquivos proibidos, dados reais, controles enfraquecidos, dependências não confiáveis), depois um commit limpo por repositório tocado; pergunta antes de fazer push |
 | `/<prefixo>.update` | Sincroniza o projeto com este template |
 | `/<prefixo>.screen` (opcional) | Gerador de prompt para telas no Claude Design |
 | `/<prefixo>.security-audit` (opcional) | [Cloudflare security-audit](https://github.com/cloudflare/security-audit-skill) vendorizada para auditorias profundas periódicas |
@@ -113,7 +113,7 @@ e `ai/` ficam em inglês (menos tokens, instruções mais confiáveis).
 /<prefixo>.fix <ajuste pequeno>            # mudança em feature já especificada
 /<prefixo>.reverse <feature existente>     # escreve a spec do que o código faz hoje
 /<prefixo>.ask <pergunta>                  # orientação, sem código
-/<prefixo>.commit                          # um commit por repositório tocado
+/<prefixo>.commit                          # um commit por repositório tocado, depois pergunta se faz push
 ```
 
 Ou rode a sessão principal como tech lead: `claude --agent techlead`.

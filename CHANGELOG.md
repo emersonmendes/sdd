@@ -5,6 +5,13 @@ from in `.sdd/config` (`SDD_TEMPLATE_REF` / `SDD_TEMPLATE_VERSION`).
 
 ## Unreleased
 
+- `commit` can now push. After the commits and the report, a new step asks (`AskUserQuestion`)
+  whether to push each repository with new commits, listing branch, upstream and outgoing
+  commits and flagging the default/protected branch. Outgoing commits not created by the run go
+  through the leak scan first. Plain `git push` (`-u` when there is no upstream) in commit order;
+  never force-push, never pull or rebase to get past a rejection, never `--no-verify`. The gate
+  "Never push" becomes "push only after the user confirms it".
+
 ## v0.2.1 — 2026-11-04
 
 - `bin/sdd`: `update`, `status` and `diff` without `--template` died with "update needs a git

@@ -1,6 +1,6 @@
 ---
 name: {{PREFIX}}.commit
-description: Commit helper. Invoked by /{{PREFIX}}.commit or "commit / commit this / create the commits". Runs a leak scan on the staged changes (secrets, forbidden files, real data, weakened controls, untrusted dependencies), then creates one well-formed commit per touched repository following the project's commit convention; never pushes.
+description: Commit helper. Invoked by /{{PREFIX}}.commit or "commit / commit this / create the commits". Runs a leak scan on the staged changes (secrets, forbidden files, real data, weakened controls, untrusted dependencies), then creates one well-formed commit per touched repository following the project's commit convention; then asks whether to push.
 metadata:
   role: committer
   related: {{PREFIX}}.go, {{PREFIX}}.express, {{PREFIX}}.fix, {{PREFIX}}.security
@@ -26,7 +26,10 @@ the last gate before anything reaches the repository: nothing is committed until
   [leak scan](#leak-scan-mandatory-before-every-commit) runs on the staged changes of every
   repository before the message is written. A hit is a **STOP** — unstage and report — never a
   warning and never something to "clean up later".
-- **Never push.** Never amend or rewrite history unless the user explicitly asks for it.
+- **Push only after the user confirms it** in this run (step 8), and only commits that passed the
+  leak scan. Never force-push (`--force`, `--force-with-lease`), never push tags or other branches
+  the run did not create, never pull or rebase to make a rejected push go through. Never amend or
+  rewrite history unless the user explicitly asks for it.
 - Never bypass the repository's own hooks or checks (`--no-verify`); a failing hook is reported,
   not skipped.
 
@@ -49,6 +52,16 @@ the last gate before anything reaches the repository: nothing is committed until
    repository holding `/specs` last so its message can reference the others.
 7. Report: repository, short hash, subject, number of files; the leak-scan result; and anything
    left uncommitted with the reason.
+8. **Push — ask first.** For each repository with new commits, list the branch, its upstream (or
+   "none") and the commits that would go out (`git log --oneline @{u}..HEAD`, or the commits of
+   this run when there is no upstream). If that list holds commits this run did not create, run
+   the [leak scan](#leak-scan-mandatory-before-every-commit) on their diff (`git diff @{u}..HEAD`)
+   first; a hit is a **STOP** for that repository. Then ask once (`AskUserQuestion`): push all
+   listed repositories, choose which ones, or don't push — flag in the question any branch that is
+   the default/protected branch. On yes, push in the commit order with `git push` (`git push -u
+   origin <branch>` when there is no upstream). A rejected push (non-fast-forward, protected
+   branch, failing hook) is reported with its message and left as is — no retry with force, no
+   pull or rebase unless the user asks.
 
 ## Leak scan (mandatory before every commit)
 
@@ -117,5 +130,6 @@ paragraph.)
 ## Expected output
 
 The list of commits created (repository, short hash, subject), the leak-scan result per
-repository (clean, or what was unstaged and why), and what was intentionally left uncommitted. No
-push.
+repository (clean, or what was unstaged and why), what was intentionally left uncommitted, and the
+push result per repository (pushed to `<remote>/<branch>`, not pushed by choice, or rejected with
+the reason).
